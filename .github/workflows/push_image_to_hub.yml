@@ -41,4 +41,4 @@ jobs:
           context: ./project3
           file: ./project3/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/java-app:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/swe304-app:latest
