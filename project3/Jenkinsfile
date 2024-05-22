@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    environment {
+        PATH = "C:/Program Files/gradle-8.7/bin;${env.PATH}"
+        DOCKER_REGISTRY = 'elllliif/java-app'
+        DOCKER_CREDENTIALS = 'DHub-1'
+        DOCKER_IMAGE = ' '
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/elllliif/devops-project3.git'
+                dir('project3') {
+                    echo 'Switched to project3 directory'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    dir('project3') {
+                        bat './gradlew clean build'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir('project3') {
+                        DOCKER_IMAGE = docker.build("${DOCKER_REGISTRY}:latest")
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('', DOCKER_CREDENTIALS) {
+                        DOCKER_IMAGE.push()
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Everything is fine.'
+        }
+        failure {
+            echo 'Something went wrong.'
+        }
+    }
+}

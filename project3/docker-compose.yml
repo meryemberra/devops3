@@ -1,0 +1,46 @@
+version: '2'
+services:
+  app:
+    container_name: my-app
+    image: elllliif/java-app:latest
+    build: .
+    ports:
+      - "8088:8088"
+    depends_on:
+      - db
+    environment:
+      SPRING_APPLICATION_NAME: projectt2
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: Elif2001.
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_SQL_INIT_PLATFORM: postgres
+      FILE_UPLOAD_DIR: /app/src/main/resources/static/images/
+      SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE: 10MB
+      SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE: 10MB
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my-db:5432/swe304
+    networks:
+      - my_network
+
+  db:
+    container_name: my-db
+    image: postgres:13
+    environment:
+      POSTGRES_DB: swe304
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Elif2001.
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
