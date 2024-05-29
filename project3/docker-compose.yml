@@ -2,7 +2,7 @@ version: '2'
 services:
   app:
     container_name: my-app
-    image: elllliif/java-app:latest
+    image: meryemberra/swe304-app
     build: .
     ports:
       - "8088:8088"
@@ -13,7 +13,7 @@ services:
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: postgres
-      DB_PASSWORD: Elif2001.
+      DB_PASSWORD: "12345"
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       SPRING_SQL_INIT_PLATFORM: postgres
       FILE_UPLOAD_DIR: /app/src/main/resources/static/images/
@@ -30,7 +30,7 @@ services:
     environment:
       POSTGRES_DB: swe304
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Elif2001.
+      POSTGRES_PASSWORD: "12345"
     ports:
       - "5432:5432"
     volumes:
